@@ -197,12 +197,12 @@ void HLW8032Component::parse_data_() {
         ESP_LOGW(TAG, "Can't calculate power factor from P = %.4f W, S = %.4f VA", power, apparent_power);
       }
       this->power_factor_sensor_->publish_state(pf);
-      // if (pf < 0 || pf > 1) {
-        // power = power * pf;
-        // if (this->power_sensor_ != nullptr) {
-          // this->power_sensor_->publish_state(power);
-        // }
-      // }
+      if (pf < 0 || pf > 1) {
+        power = power * pf;
+        if (this->power_sensor_ != nullptr) {
+          this->power_sensor_->publish_state(power);
+        }
+      }
     }
   }
 
